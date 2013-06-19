@@ -4,8 +4,6 @@ Installs and Configures No Machine's [NX Server Free Edition](http://www.nomachi
 
 Tested on Ubuntu 12.04 x86_64.
 
-# Requirements
-
 # Usage
 
 Install default recipe
