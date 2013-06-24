@@ -4,6 +4,8 @@ Installs and Configures No Machine's [NX Server Free Edition](http://www.nomachi
 
 Tested on Ubuntu 12.04 x86_64.
 
+__Note__: This cookbook attempts to enable SSH password authentication by modifying the nodes /etc/ssh/sshd_config file.
+
 # Usage
 
 Install default recipe
