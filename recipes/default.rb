@@ -8,7 +8,7 @@
 #
 
 nxsetup_directory = "/usr/lib/nx"
-nxsetup_archive = "nxsetup.tar.gz"
+nxsetup_archive_path = "#{Chef::Config[:file_cache_path]}/nxsetup.tar.gz"
 
 package "python-software-properties"
 
@@ -21,7 +21,7 @@ end
 
 package "freenx-server"
 
-remote_file "#{nxsetup_directory}/#{nxsetup_archive}" do
+remote_file "#{nxsetup_archive_path}" do
   backup false
   source node["freenx-server"]["setup_archive_url"]
   action :create_if_missing
@@ -30,12 +30,13 @@ end
 
 bash "setup-nx-server" do
   code <<-EOH
-    tar -xvf #{nxsetup_archive}
+    mkdir -p #{nxsetup_directory}
+    cd #{nxsetup_directory}
+    tar -xvf #{nxsetup_archive_path}
     ./nxsetup --install --auto
     echo -e "\nCOMMAND_START_GNOME='gnome-session --session=ubuntu-2d'"|tee -a /etc/nxserver/node.conf
     echo -e "\nPasswordAuthentication yes"|tee -a /etc/ssh/sshd_config
   EOH
-  cwd nxsetup_directory
   action :nothing
   notifies :restart, "service[ssh]", :immediately
 end
